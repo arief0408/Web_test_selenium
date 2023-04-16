@@ -1,0 +1,2 @@
+Register should have more explanative reason why i cannot use the password, such as mandatory number, capital, or symbols
+The Email field shouldnt have id called loginInputEmail and the password field shouldnt have id called loginInputEmail
