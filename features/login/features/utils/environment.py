@@ -1,9 +1,9 @@
 from behave import *
-import allure
+import allure,random
 from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-chromedriver="chromedriver"
-
-def selenium_driver():
-    context.driver = webdriver.Chrome(chromedriver)
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager

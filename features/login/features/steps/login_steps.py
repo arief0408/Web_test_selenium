@@ -1,15 +1,9 @@
 # import sys
 # sys.path.append('/CATALYS_QA_TEST/features/login/utils')
 from utils.global_queries import *
-from behave import *
-import allure
-from time import sleep
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
+import sys
+sys.path.append('features/login/features/utils')
+import environment,random
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
@@ -49,18 +43,24 @@ def step_impl(context):
 
 @when(u'I clicked on one of the product listed')
 def step_impl(context):
-    try:
-        wait_webdriver_element(driver,"class name","tt-image-box")
-        one_product =driver.find_element("xpath",r'/html/body/div[3]/div[2]/div/div/div[2]/div/div/div[7]/div/div[1]/a') 
-        one_product.click()
-    except:
-        raise NotImplementedError(u'STEP: When I clicked on one of the product listed')
+    # try:
+    wait_webdriver_element_clickable(driver,"css selector",'a[tabindex="0"]')
+    click_me = driver.find_elements("css selector",'a[tabindex="0"]')
+    click_random = random.choice(click_me)
+    link_of_click = click_random.get_attribute("href")
+    click_random.click()
+    
+    context.link_of_click = link_of_click
 
 
 @then(u'It redirect to the page of the product')
 def step_impl(context):
-
-    raise NotImplementedError(u'STEP: Then It redirect to the page of the product')
+    print(context.link_of_click)
+    current_url = get_current_url(driver)
+    if current_url == context.link_of_click:
+        take_screenshot(driver)
+    else:
+        raise NotImplementedError(u'STEP: Then It redirect to the page of the product')
 
 
 @given(u'I am on the page of selected product')

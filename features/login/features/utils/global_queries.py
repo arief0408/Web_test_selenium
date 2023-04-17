@@ -40,6 +40,10 @@ def wait_webdriver_element(driver,type_of,value):
     element = WebDriverWait(driver, 10)
     return element.until(EC.presence_of_element_located((type_of,value)))
 
+def wait_webdriver_element_clickable(driver,type_of,value):
+    element = WebDriverWait(driver, 10)
+    return element.until(EC.element_to_be_clickable((type_of,value)))
+
 def check_class_exist(driver,classname):
     checked_class = driver.find_element("class name",classname)
     if len(checked_class)>0:
