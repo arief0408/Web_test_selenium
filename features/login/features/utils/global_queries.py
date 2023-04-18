@@ -1,4 +1,3 @@
-from utils.global_queries import *
 from behave import *
 import allure
 from time import sleep

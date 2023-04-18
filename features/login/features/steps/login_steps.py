@@ -1,15 +1,31 @@
-# import sys
-# sys.path.append('/CATALYS_QA_TEST/features/login/utils')
-from utils.global_queries import *
 import sys
 sys.path.append('features/login/features/utils')
-import environment,random
+import random
+from features.login.features.utils.environment import *
+from features.login.features.utils.global_queries import *
+# from behave import *
+# import allure,random
+# from time import sleep
+# from selenium import webdriver
+# from selenium.webdriver.common.keys import Keys
+# from selenium.webdriver.chrome.service import Service
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+# from webdriver_manager.chrome import ChromeDriverManager
+
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+driver.implicitly_wait(5)
 
+# driver.get("https://voila.id/collections/live-sale/products/dellest-city-medium-shoulder-bag-gotica-black")
+# sleep(3)
+# driver.find_element("xpath",'//*[@id="product_form_7945757786355"]/div[1]/div[2]/button').click()
+# sleep(3)
+# driver.find_element("partial link text",'BELI').click()
+# sleep(3)
 @given("I am on the login page")
 def step_impl(context):
-    driver.get("https://voila.id/account/login")
+    driver.get("https://voila.id/account/login/")
     take_screenshot(driver)
 
 @when("I enter my email in email field and password in password field")
@@ -35,6 +51,10 @@ def step_impl(context):
 @given(u'I am on the homepage of voila.id')
 def step_impl(context):
     driver.get("https://voila.id/")
+    try:
+        driver.find_element("css selector",'button[aria-label="close"]').click()
+    except:
+        print("No Pop Up Deals")
     current_url = get_current_url(driver)
     if current_url == "https://voila.id/":
         take_screenshot(driver)
@@ -76,12 +96,15 @@ def step_impl(context):
 
 @when(u'I click + Keranjang')
 def step_impl(context):
-    try:
-        wait_webdriver_element_clickable(driver,"class name",'addtocart-js')
-        beli_button = driver.find_element("class name","addtocart-js")
-        beli_button.click()
-    except:
-        raise NotImplementedError(u'STEP: When I click + Keranjang')
+    sleep(5)
+    driver.find_element("css selector",'button[data-type="addtocart"]').click()
+    # try:
+    #     # wait_webdriver_element_clickable(driver,"css selector",'button[data-type="addtocart"]')
+    #     beli_button = driver.find_element("css selector",'button[data-type="addtocart"]')
+    #     driver.find_element("xpath",'/html/body/div[5]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[8]/form/div[1]/div[2]/button').click()
+        
+    # except:
+    #     raise NotImplementedError(u'STEP: When I click + Keranjang')
 
 
 @then(u'I should have an popped up windows of Produk berhasil ditambah!')
@@ -103,11 +126,12 @@ def step_impl(context):
 @when(u'I click on Beli')
 def step_impl(context):
     try:
-        driver.find_element("css selector",'a[href="/checkout"]')
+        driver.find_element("partial link text",'BELI').click()
     except:
         raise NotImplementedError(u'STEP: When I click on Beli')
 
 
 @then(u'I should be redirected to checkouts page')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Then I should be redirected to checkouts page')
+    driver.find_element("class name",'QT4by rqC98 hodFu VDIfJ j6D1f janiy')
+    # raise NotImplementedError(u'STEP: Then I should be redirected to checkouts page')
