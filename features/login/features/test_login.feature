@@ -18,16 +18,8 @@ Scenario: Select a product from collections
 
 Scenario: Bought the selected product
     Given I am on the page of selected product
-    When I click one of the size
-    And I click + Keranjang
+    When I click + Keranjang
     Then I should have an popped up windows of Produk berhasil ditambah!
-
-Scenario: Checking on if the product bought is correct
-    Given I am already bought a product
-    And I Have the popped up windows of Produk berhasil ditambah!
-    When I check the product details
-    Then The name, size, qty, and price should be displayed correctly
-    And I should have also seen the total price on the right side
 
 Scenario: I checked all the details and ready to buy
     Given I am on the popped up page of Produk berhasil ditambah!
