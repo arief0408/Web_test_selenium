@@ -19,8 +19,25 @@ def data_first_name():
 def data_last_name():
     return "Chaerudin"
 
+def zip_code():
+    return "13950"
+
 def data_address():
     return '[Arief Chaerudin]-[Candidate QA]'
+
+def data_region():
+    return 'JK'
+
+def data_phone_number():
+    return '089672300149'
+
+def value_confirmation(driver,type_of,val,data_confirmed):
+    confirmation = driver.find_element(type_of,val).get_attribute("value")
+    if confirmation == data_confirmed:
+        return confirmation
+    else:
+        raise Exception("Data not matched with what in the form")
+
 
 def take_screenshot(driver):
     allure.attach(driver.get_screenshot_as_png(), name="screenshot", attachment_type=allure.attachment_type.PNG)
