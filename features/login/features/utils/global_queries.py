@@ -13,6 +13,15 @@ def data_email():
 def data_password():
     return "Arief311065!"
 
+def data_first_name():
+    return "Arief"
+
+def data_last_name():
+    return "Chaerudin"
+
+def data_address():
+    return '[Arief Chaerudin]-[Candidate QA]'
+
 def take_screenshot(driver):
     allure.attach(driver.get_screenshot_as_png(), name="screenshot", attachment_type=allure.attachment_type.PNG)
 
