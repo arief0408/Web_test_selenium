@@ -1,5 +1,5 @@
 from behave import *
-import random
+import random,re
 from allure import severity,severity_level
 from time import sleep
 from selenium import webdriver

@@ -16,14 +16,14 @@ def step_impl(context):
 @when("I enter my email in email field and password in password field")
 def step_impl(context):
     element_id_login_email(driver).send_keys(data_email())
+    element_id_login_password(driver).send_keys(data_password())
 
 @when('I click the login button')
 def step_impl(context):
-    element_id_login_password(driver).send_keys(data_password())
+    element_class_login_button(driver).click()
 
 @then("I Should be redirected to voila.id/account")
 def step_impl(context):
-    element_class_login_button(driver).click()
     wait_webdriver_url(driver,"https://voila.id/account")
     current_url = get_current_url(driver)
     if current_url == "https://voila.id/account":
@@ -50,15 +50,18 @@ def step_impl(context):
 
 @when(u'I clicked on one of the product listed')
 def step_impl(context):
-    try:
-        wait_webdriver_element_clickable(driver,"css selector",'a[tabindex="0"]')
-        click_me = driver.find_elements("css selector",'a[tabindex="0"]')
-        click_random = random.choice(click_me)
-        link_of_click = click_random.get_attribute("href")
-        click_random.click()
-        context.link_of_click = link_of_click
-    except:
-        raise NotImplementedError(u'It redirect to the page of the product')
+    # try:
+    driver.find_element('xpath','//*[@id="main-menu"]/div/div/nav/ul/li[4]/a').click()
+    first_product = driver.find_element('xpath','//*[@id="shopify-section-collection-template-boost-pfs-filter"]/div[2]/div[1]/div[2]/div[3]/div[1]/div/div[1]/a')
+    # wait_webdriver_element_clickable(driver,"css selector",'a[tabindex="0"]')
+    # click_me = driver.find_elements("css selector",'a[tabindex="0"]')
+    # click_random = random.choice(click_me)
+    link_of_click = first_product.get_attribute("href")
+    first_product.click()
+    # click_random.click()
+    context.link_of_click = link_of_click
+    # except:
+    #     raise NotImplementedError(u'It redirect to the page of the product')
 
 
 @then(u'It redirect to the page of the product')
@@ -131,6 +134,14 @@ def step_impl(context):
 @when(u'I type Arief in Nama Depan field')
 def step_impl(context):
     try:
+        login_again = driver.find_element('css selector','a.s2kwpi1._1fragema3._1fragemah._1fragemap.s2kwpi2._1fragemaa')
+        login_again.click()
+        element_id_login_email(driver).send_keys(data_email())
+        element_id_login_password(driver).send_keys(data_password())
+        element_class_login_button(driver).click()
+    except:
+        print("Already logged in and not logged out in the middle")
+    try:
         first_name = driver.find_element("id",'TextField1') 
         first_name.clear()
         first_name.send_keys(data_first_name())
@@ -181,11 +192,11 @@ def step_impl(context):
 
 @when(u'I click the dropdown and select Daerah Khusus Ibukota Jakarta')
 def step_impl(context):
-    try:
-        select_value = Select(driver.find_element("id","Select1"))
-        select_value.select_by_value(data_region())
-    except:
-        raise NotImplementedError(u'I click the dropdown and select Daerah Khusus Ibukota Jakarta')
+    # try:
+    select_value = Select(driver.find_element("name","zone"))
+    select_value.select_by_value(data_region())
+    # except:
+    #     raise NotImplementedError(u'I click the dropdown and select Daerah Khusus Ibukota Jakarta')
 
 
 @when(u'I type 089672300149 in No Handphone field')
@@ -249,7 +260,7 @@ def step_impl(context):
 @then(u'The Dropdown value changed to Daerah Khusus Ibukota Jakarta')
 def step_impl(context):
     try:
-        value_confirmation(driver,'id','Select1',data_region())
+        value_confirmation(driver,'name','zone',data_region())
     except:
         raise NotImplementedError(u'STEP: Then The Dropdown value changed to Daerah Khusus Ibukota Jakarta')
 
@@ -275,15 +286,18 @@ def step_impl(context):
 
 @given(u'I am on the shipping page')
 def step_impl(context):
-    take_screenshot(driver)
-    raise NotImplementedError(u'STEP: I am on the shipping page')
+    try:
+        take_screenshot(driver)
+    except:
+        raise NotImplementedError(u'STEP: I am on the shipping page')
 
 @when(u'I click radio button value JNT in metode pengiriman')
 def step_impl(context):
-    try:
-        driver.find_element('id','shipping_methods-c87b93c06ecb96f408d1c8f42cfc2074-236ccd977b2fa3ddace614a5303b1ce3').click()
-    except:
-        raise NotImplementedError(u'STEP: I click radio button value JNT in metode pengiriman')
+    # try:
+    shipment_radio = driver.find_element('xpath','/html/body/div[1]/div/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/main/form/div[1]/div/div/div[1]/section/div/div[2]/fieldset/div[2]/div[2]/label/div/div[2]/div[1]/p')
+    shipment_radio.click() 
+    # except:
+    #     raise NotImplementedError(u'STEP: I click radio button value JNT in metode pengiriman')
 
 @when(u'I click Lanjut ke Pembayaran')
 def step_impl(context):
@@ -295,7 +309,7 @@ def step_impl(context):
 
 @then(u'I saw the radio button value switched to JNT')
 def step_impl(context):
-    radio_button_JNT = driver.find_element('id','shipping_methods-c87b93c06ecb96f408d1c8f42cfc2074-236ccd977b2fa3ddace614a5303b1ce3')
+    radio_button_JNT = driver.find_element('xpath','/html/body/div[1]/div/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/main/form/div[1]/div/div/div[1]/section/div/div[2]/fieldset/div[2]/div[2]/label/div/div[2]/div[1]/p')
     if radio_button_JNT.is_selected():
         take_screenshot(driver)
     else:
@@ -321,6 +335,9 @@ def step_impl(context):
 def step_impl(context):
     try:
         driver.find_element('id','basic-customManualPayment-61481550008').click()
+        total_price = driver.find_element('xpath','//*[@id="app"]/div/div/div/div[1]/div/aside/div[2]/div/div/div/section/div[2]/div[3]/div[2]/div/div/strong').get_attribute()
+        total_price = re.sub("[^0-9]", "", total_price)
+        context.total_price = total_price
     except:
         raise NotImplementedError(u'STEP: When I click the radio button value bank transfer')
 
@@ -342,10 +359,14 @@ def step_impl(context):
     except:    
         raise NotImplementedError(u'STEP: Then I saw the radio button value switched to bank transfer')
 
-@then(u'I get redirected to thank you page')
+@then(u'I get redirected to thank you page with the right amount')
 def step_impl(context):
     thank_you_page = driver.find_element('class name','thank-you__additional-content')
-    if thank_you_page != '':
+    final_total_price = driver.find_element('class name','payment-due__price skeleton-while-loading--lg')
+    final_total_price.get_attribute()
+    final_total_price = re.sub("[^0-9]", "", final_total_price)
+    compare_total_price = context.total_price
+    if thank_you_page != '' and compare_total_price == final_total_price:
         take_screenshot(driver)
     else:
         raise NotImplementedError(u'STEP: Then I get redirected to thank you page')

@@ -57,4 +57,4 @@ Scenario: Select bank transfer as payment method
     When I click the radio button value bank transfer
     And I click the Selesaikan Pesanan button
     Then I saw the radio button value switched to bank transfer
-    And I get redirected to thank you page
+    And I get redirected to thank you page with the right amount

@@ -49,7 +49,7 @@ def element_id_login_password(driver):
     return driver.find_element("id","loginInputEmail")
 
 def element_class_login_button(driver):
-    return driver.find_element("xpath","/html/body/div[4]/div/div/div/div/div[2]/div/div[1]/div/form/div[4]/div[1]/div/button")
+    return driver.find_element("xpath",'//*[@id="customer_login"]/div[4]/div[1]/div/button')
 
 def element_xpath_shoes(driver):
     return driver.find_element("xpath","/html/body/div[3]/div[2]/div/div/div[2]/div/div/div[7]/div/div[1]/a")

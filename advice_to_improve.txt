@@ -1,2 +1,5 @@
 Register should have more explanative reason why i cannot use the password, such as mandatory number, capital, or symbols
 The Email field shouldnt have id called loginInputEmail and the password field shouldnt have id called loginInputEmail
+When i failed to login, the error message is dissapear after half a second, i think this warning message must stayed
+When i failed to login for a multiple time with correct email and wrong password, it should be locked and can only be open via email to prevent brute force
+In the homepage, in class = row tt-services-listing, where it have multiple benefit of shopping in voila, i dont think this should be an button/clickable text, it somehow make the page scrolled up, it will confuse user whether it really a clickable or not
